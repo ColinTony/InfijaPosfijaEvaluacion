@@ -14,5 +14,11 @@ de la expresion y la evaluacion de la expresion con los valores deseados.
 COMPILACIÓN : usamos el comando gcc Practica01.c TADPila.c -o Practica01.c
 */
 
+#include <stdio.h>
+#include "TADPila.h"
 
-
+int main()
+{
+	
+	return 0;
+}
