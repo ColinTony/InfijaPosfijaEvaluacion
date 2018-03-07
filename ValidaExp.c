@@ -60,6 +60,7 @@ Devuelve: TRUE si es corecta , FALSE si no lo es.
 */	 
 boolean verificaParentesis(expresion *exp)
 {
+	boolean isCorrect = TRUE;
 	pila pilaValida; // se crea una pila para validar
 	elemento e1; // se declara elemento e1
 	Initialize(&pilaValida);
@@ -80,7 +81,8 @@ boolean verificaParentesis(expresion *exp)
 				if(Empty(&pilaValida))
 				{
 					printf("ERROR: Existen mas parentesis que cierran de los que abren");
-					exit(1); //Salir del programa con error
+					isCorrect = FALSE;
+					Destroy(&pilaValida); // destruimos la pila
 				}
 				e1=Pop(&pilaValida);
 			}
@@ -89,9 +91,13 @@ boolean verificaParentesis(expresion *exp)
 	if(!Empty(&pilaValida))
 	{
 		printf("ERROR: Existen mas parentesis que abren de los que cierran");
-		exit(1); //Salir del programa con error
+		isCorrect = FALSE;
+		Destroy(&pilaValida);// destruimos la pila
 	}
-	printf("\n Los parentesis estan correctos");
+	
+	printf("\n Los parentesis estan correctos"); 
+	Destroy(&pilaValida); // destruimos la pila
+	return isCorrect;
 }
 
 /*
@@ -103,7 +109,9 @@ Devuelve: TRUE si es corecta , FALSE si no lo es.
 */	 
 boolean verificaOperadores(expresion *exp)
 {
+	boolean isCorrect = TRUE;
 	
+	return isCorrect;
 }//  fin verificaOperadores
 
 
