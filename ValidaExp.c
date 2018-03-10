@@ -12,7 +12,7 @@
 	//LIBRERAS
 	#include<stdio.h>
 	#include <string.h> //Para usar strlen()
-	#include<stdlib.h>
+	#include<stdlib.h> // para exit
 	#include "ValidaExp.h"
 	#include "TADPilaDin.h"
 
@@ -58,10 +58,15 @@
 	Descripción: Evalua la expresion para saber si es correcta, debe cumplir
 	con los criterios algebraicos de las expresiones.
 	Recibe:  *expresion la direccion de la cadena de la expresion.
-	Devuelve: TRUE si es corecta , FALSE si no lo es. 
+	Devuelve: TRUE si es corecta , FALSE si no lo es.
+	Nota : El programa necesita de operadores para cada operacion , si pongo (X+Y)*C(B-A) 
+	El programa dara error en la expresion , como su huebira y dos constantes juntas en 
+	el caso del ejemplo tomaria un CB , sin embargo si ponemos la expresio como
+	(X+Y)*C*(B-A) La expresion queda correctamente 
 	*/	 
 	boolean verificaExpresion(expresion *exp)
 	{
+
 		boolean isCorrect = TRUE;
 		pila pilaValidaPare; // se crea una pila para validar los parentesis
 		pila pilaValidaConst; // se crea una pila para validar constantes
@@ -73,6 +78,10 @@
 		Initialize(&pilaValidaConst);
 		Initialize(&pilaValidaOpera);
 
+		// la pila Operacion necesita un elemento inicial.
+		// si no ocurriria un error de subdesbbordamiento
+		e1.c = '#';
+		Push(&pilaValidaOpera,e1);
 		// Debe tener algo la cadena a validar
 		if(exp->cadena != NULL)
 		{
@@ -82,6 +91,8 @@
 			{
 				switch(exp->cadena[i]){
 					// cuando es un parentesis se añade a la pila para validar el parentesis
+					case ' ':
+						break;
 					case '(' : 
 							e1.c = '('; // elemento de la pila es '('
 							Push(&pilaValidaPare,e1);
@@ -91,34 +102,103 @@
 							//Si se intenta extraer un elemento y la pila es vacia Error: P.g. (a+b)*c)
 							if(Empty(&pilaValidaPare))
 							{
-								printf("\n ERROR: Existen mas parentesis que cierran de los que abren");
 								isCorrect = FALSE;
-								Destroy(&pilaValidaPare); // destruimos la pila
+								exit(0);
+								break;
 							}
-							e1=Pop(&pilaValidaPare);
+							else
+								e1=Pop(&pilaValidaPare);
 						break;
 					
-					case '+': // suma
-						
+					case '+': // suma se trata de un operador  , se debe quitar una constante
+						if(Empty(&pilaValidaConst))
+						{
+							isCorrect = FALSE;
+							printf("\n ERROR: Existe algun operador mal escrito");
+							exit(0);
+							break;
+						}else{
+							// si no , quitamos una constante y guardamos el operador en pila de operadores
+							Pop(&pilaValidaConst); // quitamos una constante
+							e1.c = '+'; // Se añade el operador
+							Push(&pilaValidaOpera,e1); // le añadimos el operador 
+						}
 						break;
 					case '-': // resta
+						if(Empty(&pilaValidaConst))
+						{
+							isCorrect = FALSE; // esta mal escrito
+							printf("\n ERROR: Existe algun operador mal escrito");
+							exit(0);
+							break;
 
+						}else{
+							// si no , quitamos una constante y guardamos el operador en pila de operadores
+							Pop(&pilaValidaConst); // quitamos una constante
+							e1.c = '-'; // Se añade el operador
+							Push(&pilaValidaOpera,e1); // le añadimos el operador 
+						}
 						break;
 
-					case '*': // operador para multiplicar
-
+					case '*': // operador para multiplicar se debe quitar una constante
+						if(Empty(&pilaValidaConst))
+						{
+							isCorrect = FALSE;
+							printf("\n ERROR: Existe algun operador mal escrito"); // un ** 
+							exit(0);
+							break;
+						}else{
+							// si no , quitamos una constante y guardamos el operador en pila de operadores
+							Pop(&pilaValidaConst); // quitamos una constante
+							e1.c = '*'; // Se añade el operador
+							Push(&pilaValidaOpera,e1); // le añadimos el operador 
+						}
 						break;
 					
-					case '/': // operador para dividir
-
+					case '/': // operador para dividir se debe quitar una constante
+						if(Empty(&pilaValidaConst))
+						{
+							isCorrect = FALSE;
+							printf("\n ERROR: Existe algun operador mal escrito");
+							exit(0);
+							break;
+						}else{
+							// si no , quitamos una constante y guardamos el operador en pila de operadores
+							Pop(&pilaValidaConst); // quitamos una constante
+							e1.c = '/'; // Se añade el operador
+							Push(&pilaValidaOpera,e1); // le añadimos el operador 
+						}
 						break;
 					
-					case '^': // operador exponente
-
+					case '^': // operador exponente se debe quitar una constante
+						if(Empty(&pilaValidaConst))
+						{
+							isCorrect = FALSE;
+							printf("\n ERROR: Existe algun operador mal escrito");
+							exit(0);
+							break;
+						}else{
+							// si no , quitamos una constante y guardamos el operador en pila de operadores
+							Pop(&pilaValidaConst); // quitamos una constante
+							e1.c = '^'; // Se añade el operador
+							Push(&pilaValidaOpera,e1); // le añadimos el operador 
+						}
 						break;
 					
-					default: // en caso de que sea una letra o numero...
-
+					default: // en caso de que sea una letra o numero... quitar un operador
+						
+						if(Empty(&pilaValidaOpera))
+						{
+							isCorrect = FALSE;
+							printf("\n ERROR: Existe alguna constante mal escrita");
+							exit(0);
+							break;
+						}else{
+							e1 = Pop(&pilaValidaOpera); // nota: no es necesario guardar el elemento  
+							e1.c = exp->cadena[i]; // guardamos la constante
+							// la metemos a la pila constantes
+							Push(&pilaValidaConst,e1);
+						}
 						break;
 				}
 			}
@@ -126,10 +206,27 @@
 		else
 			printf("%s\n", "La cadena esta vacia");
 
+
+		/*
+		* Supongo que al validar la expresion en for y el Switch no es necesario estos ifs
+		* ya que si alguna expresion esta mal escrita se muere el programa con exit(0)
+		* Pero si en dado caso pasara el filtro , debera cumplir estas condiciones para
+		* saber si esta correcta la expresion.
+		*/
 		//Si al terminar de revisar la expresion hay elementos en la pilas Error: P.g. (a+b)*c(a-c
 		if(!Empty(&pilaValidaPare)) // Revisar las pilas
 		{
 			printf("\n ERROR: Existen mas parentesis que abren de los que cierran");
+			isCorrect = FALSE; // cambiamos a falso
+		}
+		if(Empty(&pilaValidaConst))
+		{
+			printf("\n ERROR: Existe alguna constante mal escrita");
+			isCorrect = FALSE; // cambiamos a falso
+		}
+		if(!Empty(&pilaValidaOpera))
+		{
+			printf("\n ERROR: Estan mal escritos tus operadores ");
 			isCorrect = FALSE; // cambiamos a falso
 		}
 		
@@ -139,7 +236,7 @@
 		Destroy(&pilaValidaConst); // destruye pila constantes
 
 		if(isCorrect){
-			printf("%s\n", "EXPRESION CORRECTA !");
+			printf("%s\t", "EXPRESION CORRECTA !");
 		}
 		return isCorrect;
 	}

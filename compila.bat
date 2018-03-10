@@ -1,0 +1,1 @@
+gcc Practica01.c TADPilaDin.c ValidaExp.c -o practica01
