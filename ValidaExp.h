@@ -32,6 +32,5 @@ typedef struct expresion
 // Definimos las funciones
 void createExp(expresion *exp); 	// Crea la expresion a evaluar 
 boolean isCorrect(expresion *exp); 	// Devolvera si la expresion esta correctamente escrita
-boolean verificaParentesis(expresion *exp); 	// verificara los parentesis de la expresion
-boolean verificaOperadores(expresion *exp); 	// Verificara los operadores de las expresiones
+boolean verificaExpresion(expresion *exp); 	// verificara los parentesis de la expresion
 int tamCadena(expresion *exp); 		// Devuelve el tamño de la cadena
