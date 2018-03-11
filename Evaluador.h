@@ -8,6 +8,6 @@
 */
 
 // Definimos las funciones
-float evaluaExpresion(expresion *exp);
-expresion convierteExpresion(expresion *exp);
-boolean comparar(int compara , elemento e);
+float evaluaExpresion(expresion *exp); 			// Esta funcion sera para evaluar la expresion postfija
+expresion convierteExpresion(expresion *exp); 	// Esta funcion sera convertir la expresion a postfija
+boolean comparar(int compara , elemento e);		// compara la prioridad de los operadores

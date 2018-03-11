@@ -11,6 +11,7 @@ OBSERVACIONES: En esta parte del codigo solo sera la definicion de las funciones
 
 //DEFINICIONES
 #define TAM_CADENA 100 //Tamaño maximo de la cadena a evaluar considerando el '\0'
+
 //DEFINICIONES DE CONSTANTES
 #define TRUE	1
 #define FALSE	0

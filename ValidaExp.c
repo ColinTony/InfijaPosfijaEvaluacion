@@ -27,9 +27,9 @@
 	void createExp(expresion *exp) // Crea la expresion a evaluar
 	{
 		printf("\n INFIJO ==============================> POSFIJO \n INTRODUZCA LA EXPRESION A TRANSFORMAR (No incluya espacios) : ");
-		scanf("%s", exp->cadena);
+		scanf("%s", exp->cadena); // la cadena puesta por el usuario la añadimos a la cadena de nuestra expresion
 		strupr(exp->cadena); // pasamos todo a Mayusculas
-		isCorrect(exp);
+		isCorrect(exp); // comprobamos si esta correcta
 		printf("\n");
 		
 	}

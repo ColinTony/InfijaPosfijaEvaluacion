@@ -24,11 +24,14 @@ COMPILACIÓN : usamos el comando gcc Practica01.c TADPila.c Evaluador.c -o Pract
 
 int main()
 {
-	expresion exp; 
-	createExp(&exp);
+	expresion exp; // nuestra expresion 
+	
+	createExp(&exp); // creamos expresion
 	printf("\n Expresion Infija :  %s \n", &exp.cadena);
+	
+	// convertimos la expresion en PostFija
 	exp = convierteExpresion(&exp);
 	printf(" Expresion Postfija : %s \n", &exp.cadena);
-	
+
 	return 0;
 }
