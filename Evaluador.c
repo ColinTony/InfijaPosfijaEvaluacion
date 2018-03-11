@@ -352,6 +352,9 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 		exp_post.cadena[posCadena]=e1.c;
 		posCadena++; // sumar la posicion
 	}
+	// Todo array tiene que tener un caracter nulo que diga el final de la caena
+	// le decimos el final de la cadena
+	exp_post.cadena[posCadena] ='\0'; 
 
 	// destruimos la pila
 	Destroy(&pilaConvert);
