@@ -11,7 +11,7 @@ OBSERVACIONES: Utilizamos una Estructura de datos pila de forma dinamica , la cu
 nos ayudara para el algoritmo de conversion de infija a posfija, la validacion
 de la expresion y la evaluacion de la expresion con los valores deseados.
 
-COMPILACIÓN : usamos el comando gcc Practica01.c TADPila.c -o Practica01.c
+COMPILACIÓN : usamos el comando gcc Practica01.c TADPila.c Evaluador.c -o Practica01.c ó ejecutar el .bat
 */
 
 #include <stdio.h>
@@ -19,13 +19,16 @@ COMPILACIÓN : usamos el comando gcc Practica01.c TADPila.c -o Practica01.c
 #include <string.h> //Para usar strlen()
 #include "TADPilaDin.h" // Pila dinamica.
 #include "ValidaExp.h" // validacion de expresiones
+#include "Evaluador.h" // Evaluacion de las expresiones
 
-#define TAM_CADENA 100 //TamaÃ±o maximo de la cadena a evaluar considerando el '\0'
 
 int main()
 {
-	expresion exp;
+	expresion exp; 
 	createExp(&exp);
-
+	printf("\n Expresion Infija :  %s \n", &exp.cadena);
+	exp = convierteExpresion(&exp);
+	printf(" Expresion Postfija : %s \n", &exp.cadena);
+	
 	return 0;
 }

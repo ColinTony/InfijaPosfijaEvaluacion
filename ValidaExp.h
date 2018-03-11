@@ -6,7 +6,7 @@ VERSIÓN: 1.0
 DESCRIPCIÓN: Libreria , cabecera , clase(?) para validar la expresion algebraica
 de manera correcta.
 
-OBSERVACIONES: En esta parte del codigo solo sera la declaracion de las funciones a utilizar.
+OBSERVACIONES: En esta parte del codigo solo sera la definicion de las funciones a utilizar.
 */
 
 //DEFINICIONES
