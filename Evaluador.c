@@ -150,12 +150,8 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 	// variables int que me ayudaran a comparar la prioridad de las operaciones
 	int aux = 0;
 	int posCadena=0;
-	int posVariable=0;
-	int i;
+	int i; // contador
 	pila pilaConvert;
-
-	// arreglo de mi estructura variables
-	variable variables[TAM_CADENA]; // creamos una arreglo de variables
 
 	// elemento
 	elemento e1;
@@ -380,10 +376,6 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 					e1.c = exp->cadena[i];
 					exp_post.cadena[posCadena]=e1.c;
 					posCadena++;
-
-					// añadimos la variable al arreglo de variables
-					variables[posVariable].var=e1.c;
-					posVariable++;
 				break;
 			}
 			
@@ -405,8 +397,6 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 
 	// destruimos la pila
 	Destroy(&pilaConvert);
-	
-	
 	// regresamos la expresion transformada en postfija
 	return exp_post;
 }

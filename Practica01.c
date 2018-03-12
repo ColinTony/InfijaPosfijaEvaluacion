@@ -27,11 +27,12 @@ int main()
 	expresion exp; // nuestra expresion 
 	
 	createExp(&exp); // creamos expresion
+	printf("\n %s \t", "-----EXPRESION ALGEBRAICA EN SUS DOS TIPOS---------");
 	printf("\n Expresion Infija :  %s \n", &exp.cadena);
-	
 	// convertimos la expresion en PostFija
 	exp = convierteExpresion(&exp);
 	printf(" Expresion Postfija : %s \n", &exp.cadena);
+	printf("%s \t", "--------------------------------------------------------");
 
 	return 0;
 }

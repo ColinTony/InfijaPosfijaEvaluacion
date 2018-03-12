@@ -249,18 +249,19 @@
 		Destroy(&pilaValidaOpera); // destryue pila Opera
 		Destroy(&pilaValidaConst); // destruye pila constantes
 
-		if(isCorrect){
-			printf( "\n %s  \t", "  LA EXPRESION ES CORRECTA ");
+		if(isCorrect){	
+			printf( "\n %s", "--------------EXPRESION CORRECTA------------\n");
 		}
 
-		// Veamos las variables
-		printf("\n %s ", "Lista de variables");
+		// Veamos las variables 
+		printf("\n %s \t", "--------------LISTA DE VARIABLES--------------");
 		for(i = 0; i<posicionVari; i++)
 		{
 			// recorremos las variables
 			printf("\n %c", exp->variables[i].var);
 		}
-		
+		printf("\n %s \t", "----------------------------------------------");
+
 		return isCorrect;
 	}
 
