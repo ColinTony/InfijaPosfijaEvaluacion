@@ -18,13 +18,22 @@ OBSERVACIONES: En esta parte del codigo solo sera la definicion de las funciones
 
 //DEFINICIONES DE TIPOS DE DATO
 
-//Definir un boolean (Se modela con un "char")
-typedef unsigned char boolean;
+typedef unsigned char boolean; //Definir un boolean (Se modela con un "char")
+
+// creamos un tipo de dato variable con su identificador y valor
+typedef struct variable{
+	
+	char var;
+	int valor;
+
+}variable;
 
 typedef struct expresion
 {
 	//Variables de la estructura "Expresion"
 	char cadena [TAM_CADENA];
+	// arreglo de variables
+	variable variables[TAM_CADENA];
 	// tamaño de la cadena
 	int tamCadena;
 

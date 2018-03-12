@@ -70,7 +70,8 @@
 	*/	 
 	boolean verificaExpresion(expresion *exp)
 	{
-
+		int i; // contador
+		int posicionVari =0; // contando la posiscion de las variables
 		boolean isCorrect = TRUE;
 		pila pilaValidaPare; // se crea una pila para validar los parentesis
 		pila pilaValidaConst; // se crea una pila para validar constantes
@@ -91,7 +92,7 @@
 		{
 			// no debe estar vacia la expresion
 			//Recorrer cada caracter de la cadena 
-			for(int i=0;i<tamCadena(exp);i++)
+			for(i=0;i<tamCadena(exp);i++)
 			{
 				switch(exp->cadena[i]){
 					
@@ -197,7 +198,10 @@
 					break;
 
 					default: // en caso de que sea una letra o numero... quitar un operador
-
+						// no importa el caso es una variable , se mete al arreglo de variables
+						e1.c = exp->cadena[i];
+						exp->variables[posicionVari].var= e1.c;
+						posicionVari++; // sumamos a una posicion siguiente 
 						if(Empty(&pilaValidaOpera))
 						{
 							isCorrect = FALSE;
@@ -218,10 +222,10 @@
 
 
 	/*
-		* Supongo que al validar la expresion en for y el Switch no es necesario estos ifs
-		* ya que si alguna expresion esta mal escrita se muere el programa con exit(0)
-		* Pero si en dado caso pasara el filtro , debera cumplir estas condiciones para
-		* saber si esta correcta la expresion.
+		Supongo que al validar la expresion en for y el Switch no es necesario estos ifs
+		ya que si alguna expresion esta mal escrita se muere el programa con exit(0)
+		Pero si en dado caso pasara el filtro , debera cumplir estas condiciones para
+		saber si esta correcta la expresion.
 	*/
 		//Si al terminar de revisar la expresion hay elementos en la pilas Error: P.g. (a+b)*c(a-c
 		if(!Empty(&pilaValidaPare)) // Revisar las pilas
@@ -248,6 +252,15 @@
 		if(isCorrect){
 			printf( "\n %s  \t", "  LA EXPRESION ES CORRECTA ");
 		}
+
+		// Veamos las variables
+		printf("\n %s ", "Lista de variables");
+		for(i = 0; i<posicionVari; i++)
+		{
+			// recorremos las variables
+			printf("\n %c", exp->variables[i].var);
+		}
+		
 		return isCorrect;
 	}
 

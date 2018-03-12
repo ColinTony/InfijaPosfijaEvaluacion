@@ -12,13 +12,51 @@ OBSERVACIONES: .
 //LIBRERAS
 #include <stdio.h>
 #include <string.h> //Para usar strlen()
+#include<math.h> // para las operaciones matematicas
 #include <stdlib.h> // para exit
 #include "ValidaExp.h"
 #include "TADPilaDin.h"
 #include "Evaluador.h"
 
-// Definimos las funciones
 
+// Definimos las funciones
+/*
+	float opera(int der , int izq , char operacion)
+	Descripción: Realiza la operacion que se le mande
+	Recibe:  int der , int izq , char operacion; dos numeros y una operacion a realizar
+	Devuelve: result  float con el resultado.
+*/
+float opera(float der , float izq , char operacion)
+{
+	float result;
+	switch(operacion)
+	{
+		case '+':
+			result = (izq+der);
+		break;
+		
+		case '-':
+			result = (izq-der);
+		break;
+		
+		case '/':
+			result = (izq/der);
+		break;
+		
+		case '*':
+			result = (izq*der);
+		break;
+
+		case '^':
+			result = (pow(der,izq));
+		break;
+
+		default:
+			printf("%s\n", "Hubo un error en realizar la operacion");
+		break;
+	}
+	return result;
+}
 	
 /*
 	void  evaluaExpresion(expresion *exp);
@@ -29,14 +67,14 @@ OBSERVACIONES: .
 float evaluaExpresion(expresion *exp)
 {
 	float total;
-	char cadena2 [TAM_CADENA];
-	strcpy(cadena2,exp->cadena);
 	// al separar los numeros uno a la derecha y uno a la izquierda
 	float numDer;
 	float numIzq;
-
-	printf("%s\n", exp->cadena);
 	
+	// pilas necesarias para la evaluacion
+	pila pilaEvaluador;
+	char abc[27]; // letras del abecedario
+
 
 	return total; // devuelve el resultado
 }
@@ -112,7 +150,12 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 	// variables int que me ayudaran a comparar la prioridad de las operaciones
 	int aux = 0;
 	int posCadena=0;
+	int posVariable=0;
+	int i;
 	pila pilaConvert;
+
+	// arreglo de mi estructura variables
+	variable variables[TAM_CADENA]; // creamos una arreglo de variables
 
 	// elemento
 	elemento e1;
@@ -127,7 +170,7 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 	{
 		// no debe estar vacia la expresion
 		//Recorrer cada caracter de la cadena 
-		for(int i=0;i<tamCadena(exp);i++)
+		for(i=0;i<tamCadena(exp);i++)
 		{
 			switch(exp->cadena[i])
 			{
@@ -337,7 +380,10 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 					e1.c = exp->cadena[i];
 					exp_post.cadena[posCadena]=e1.c;
 					posCadena++;
-					
+
+					// añadimos la variable al arreglo de variables
+					variables[posVariable].var=e1.c;
+					posVariable++;
 				break;
 			}
 			
@@ -359,6 +405,7 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 
 	// destruimos la pila
 	Destroy(&pilaConvert);
+	
 	
 	// regresamos la expresion transformada en postfija
 	return exp_post;
