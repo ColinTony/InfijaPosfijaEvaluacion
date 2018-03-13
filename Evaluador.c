@@ -66,15 +66,23 @@ float opera(float der , float izq , char operacion)
 */
 float evaluaExpresion(expresion *exp)
 {
-	float total;
+	int i; // contador
+	float total; // total de la operacion
 	// al separar los numeros uno a la derecha y uno a la izquierda
 	float numDer;
 	float numIzq;
 	
 	// pilas necesarias para la evaluacion
 	pila pilaEvaluador;
-	char abc[27]; // letras del abecedario
+	pila variablesValores;
 
+	char abc[TAM_CADENA]; // letras del abecedario
+	
+	for(i=0; i<exp->tamVariables; i++)
+		abc[i] = exp->variables[i].var; // se guarda cada variable en un arreglo auxiliar para que no vuelvan a salir
+	
+	// apartir de aqui se deben evaluar la expresion 
+	// ........ Usa la funcion opera para que te devuelva el resultado
 
 	return total; // devuelve el resultado
 }
@@ -158,7 +166,7 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 	
 	// expresion posfija
 	expresion exp_post;
-
+	exp_post.tamVariables = 0;
 	// inicializamos nuestras pilas
 	Initialize(&pilaConvert);
 
@@ -376,6 +384,9 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 					e1.c = exp->cadena[i];
 					exp_post.cadena[posCadena]=e1.c;
 					posCadena++;
+					// asignamos las mismas variables a la expresion postfija
+					exp_post.variables[exp_post.tamVariables].var = e1.c;
+					exp_post.tamVariables++; // aumentamos el tamaño
 				break;
 			}
 			
@@ -394,9 +405,28 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 	// Todo array tiene que tener un caracter nulo que diga el final de la caena
 	// le decimos el final de la cadena
 	exp_post.cadena[posCadena] ='\0'; 
-
+	exp_post.variables[exp_post.tamVariables].var = '\0';
 	// destruimos la pila
 	Destroy(&pilaConvert);
 	// regresamos la expresion transformada en postfija
 	return exp_post;
+}
+/*
+	void  void verVariables(expresion *exp
+	Descripción: recorre el arreglo de variables
+	Recibe:  expresion *exp. 
+	Devuelve: una expresion de tipo posfija
+*/
+void verVariables(expresion *exp)
+{
+	int i =0;
+	printf("\n %s \t", "--------------LISTA DE VARIABLES ESCRITAS--------------");
+	for(i = 0; i<exp->tamVariables; i++)
+	{
+		// recorremos las variables
+		printf("\n %c \t Valor: ", exp->variables[i].var,exp->variables[i].valor);
+
+	}
+	printf("\n %s \t", "-------------------------------------------------------");
+
 }

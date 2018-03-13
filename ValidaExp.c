@@ -71,7 +71,7 @@
 	boolean verificaExpresion(expresion *exp)
 	{
 		int i; // contador
-		int posicionVari =0; // contando la posiscion de las variables
+		exp->tamVariables =0; // contando la posiscion de las variables
 		boolean isCorrect = TRUE;
 		pila pilaValidaPare; // se crea una pila para validar los parentesis
 		pila pilaValidaConst; // se crea una pila para validar constantes
@@ -200,8 +200,8 @@
 					default: // en caso de que sea una letra o numero... quitar un operador
 						// no importa el caso es una variable , se mete al arreglo de variables
 						e1.c = exp->cadena[i];
-						exp->variables[posicionVari].var= e1.c;
-						posicionVari++; // sumamos a una posicion siguiente 
+						exp->variables[exp->tamVariables].var= e1.c;
+						exp->tamVariables++; // sumamos a una posicion siguiente 
 						if(Empty(&pilaValidaOpera))
 						{
 							isCorrect = FALSE;
@@ -253,15 +253,10 @@
 			printf( "\n %s", "--------------EXPRESION CORRECTA------------\n");
 		}
 
-		// Veamos las variables 
-		printf("\n %s \t", "--------------LISTA DE VARIABLES--------------");
-		for(i = 0; i<posicionVari; i++)
-		{
-			// recorremos las variables
-			printf("\n %c", exp->variables[i].var);
-		}
-		printf("\n %s \t", "----------------------------------------------");
-
+		// Todo array tiene que tener un caracter nulo que diga el final de la caena
+		// le decimos el final de la cadena
+		exp->variables[exp->tamVariables].var ='\0';
+		
 		return isCorrect;
 	}
 

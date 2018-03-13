@@ -13,4 +13,4 @@ float evaluaExpresion(expresion *exp); 			// Esta funcion sera para evaluar la e
 expresion convierteExpresion(expresion *exp); 	// Esta funcion sera convertir la expresion a postfija
 boolean comparar(int compara , elemento e);		// compara la prioridad de los operadores
 float opera(float der , float izq , char operacion); // Realiza la operacion
-
+void verVariables(expresion *exp); 	// Vemos las variables que esxribio el usuario

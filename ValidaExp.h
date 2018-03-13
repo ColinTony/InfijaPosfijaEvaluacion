@@ -36,6 +36,8 @@ typedef struct expresion
 	variable variables[TAM_CADENA];
 	// tamaño de la cadena
 	int tamCadena;
+	// tamaño de arreglo variables
+	int tamVariables;
 
 }expresion;
 
