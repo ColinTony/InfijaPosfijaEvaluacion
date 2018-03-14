@@ -67,23 +67,37 @@ float opera(float der , float izq , char operacion)
 float evaluaExpresion(expresion *exp)
 {
 	int i; // contador
+	int k;
 	float total; // total de la operacion
 	// al separar los numeros uno a la derecha y uno a la izquierda
 	float numDer;
 	float numIzq;
-	
+	float a;
+	char operacion;
 	// pilas necesarias para la evaluacion
 	pila pilaEvaluador;
-	pila variablesValores;
-
-	char abc[TAM_CADENA]; // letras del abecedario
+	//pila variablesValores;
+	Initialize(&pilaEvaluador);
 	
-	for(i=0; i<exp->tamVariables; i++)
-		abc[i] = exp->variables[i].var; // se guarda cada variable en un arreglo auxiliar para que no vuelvan a salir
+	for (i = 0; i< exp->tamVariables;i++){
+		exp->variables[i].valor=0.0;
+	}
 	
-	// apartir de aqui se deben evaluar la expresion 
-	// ........ Usa la funcion opera para que te devuelva el resultado
+	for (i = 0; i< exp->tamVariables;i++)
+	{
+		if (exp->variables[i].valor==0.0)// commparamos si son nulos los valores si esto se cumple pediremos el valor;
+		{
+			printf("\ningresar el valor de la variable:%c\n",exp->variables[i].var);//pedimos el valor
+			scanf("%f",&exp->variables[i].valor);//guardamos el valor en la variable
+			for (k= 0; k < exp->tamVariables;k++)
+			{
+				if(exp->variables[i].var==exp->variables[k+1].var)// hacemos la comparacion entre nuestra primera variable y las variables siguientes ,
+					exp->variables[k+1].valor=exp->variables[i].valor; //en caso de ser iguales copiamos el valor
+			}
 
+		}
+	
+	}
 	return total; // devuelve el resultado
 }
 /*
@@ -424,7 +438,7 @@ void verVariables(expresion *exp)
 	for(i = 0; i<exp->tamVariables; i++)
 	{
 		// recorremos las variables
-		printf("\n %c \t Valor: ", exp->variables[i].var,exp->variables[i].valor);
+		printf("\n %c \t Valor:%.3f  ", exp->variables[i].var,exp->variables[i].valor);//exp->variables[i].valor
 
 	}
 	printf("\n %s \t", "-------------------------------------------------------");

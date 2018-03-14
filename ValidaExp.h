@@ -24,7 +24,7 @@ typedef unsigned char boolean; //Definir un boolean (Se modela con un "char")
 typedef struct variable{
 	
 	char var;
-	int valor;
+	float valor;
 
 }variable;
 

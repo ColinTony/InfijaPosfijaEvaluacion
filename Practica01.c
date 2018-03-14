@@ -33,8 +33,7 @@ int main()
 	exp = convierteExpresion(&exp);
 	printf(" Expresion Postfija : %s \n", &exp.cadena);
 	printf("%s", "--------------------------------------------------------");
-	verVariables(&exp);
-
 	evaluaExpresion(&exp);
+	verVariables(&exp);
 	return 0;
 }

@@ -94,6 +94,12 @@
 			//Recorrer cada caracter de la cadena 
 			for(i=0;i<tamCadena(exp);i++)
 			{
+				if ((exp->cadena[i]>=48)&&(exp->cadena[i]<=57))
+				{
+					isCorrect = FALSE;
+					printf("\n ERROR: Aun no debes ingresar valores numericos , usa una variable");
+					exit(0);
+				}
 				switch(exp->cadena[i]){
 					
 					case ' ':

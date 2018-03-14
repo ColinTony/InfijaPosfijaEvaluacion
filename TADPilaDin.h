@@ -30,6 +30,7 @@ typedef struct elemento
 {
 	//Variables de la estructura "elemento" (El usuario puede modificar)
 	char c;
+	float aux;
 }elemento;
 
 //Definir un nodo que será utilizado para almacenar una posición de la pila (Nodo), lo que incluira a un elemento y a un apuntador al siguiente nodo
