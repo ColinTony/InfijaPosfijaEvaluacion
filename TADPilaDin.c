@@ -20,6 +20,7 @@ COMPILACIÓN PARA GENERAR EL CÓDIGO OBJETO: gcc TADPilaDin.c -c
 #include <stdio.h>
 #include <stdlib.h>
 #include "TADPilaDin.h"
+#include "ValidaExp.h"
 
 //DEFINICIÓN DE FUNCIONES
 

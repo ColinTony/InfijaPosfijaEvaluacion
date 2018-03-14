@@ -72,17 +72,16 @@ float evaluaExpresion(expresion *exp)
 	// al separar los numeros uno a la derecha y uno a la izquierda
 	float numDer;
 	float numIzq;
-	float a;
-	char operacion;
+	elemento e1;
 	// pilas necesarias para la evaluacion
 	pila pilaEvaluador;
 	//pila variablesValores;
 	Initialize(&pilaEvaluador);
-	
+	// se asignan por default los valores de las variables
 	for (i = 0; i< exp->tamVariables;i++){
 		exp->variables[i].valor=0.0;
 	}
-	
+	// se verifica que no se repita la variable y si es asi se asigna el mismo valor
 	for (i = 0; i< exp->tamVariables;i++)
 	{
 		if (exp->variables[i].valor==0.0)// commparamos si son nulos los valores si esto se cumple pediremos el valor;
@@ -98,6 +97,98 @@ float evaluaExpresion(expresion *exp)
 		}
 	
 	}
+	// Empezamos la evaluacion
+	//Recorrer cada caracter de la cadena
+	// si es un operador se saca el izquierdo , derecho y se avalua , el resultado se mete a la pila 
+	// si no , simplemente se agreaga a la pila
+	for(i=0; i<=tamCadena(exp); i++)
+	{
+		switch(exp->cadena[i])
+		{
+			case '+': // operador suma
+				e1 = Pop(&pilaEvaluador); // asignamos el valor derecho
+				numDer = e1.aux; // se lo ponemos a la variable derecho
+
+				e1 = Pop(&pilaEvaluador);// asignamos el izquierdo y lo ponemos en su variable
+				numIzq = e1.aux;
+				// aplicamos la operacion
+				total=opera(numDer,numIzq,'+'); // se guarda el resultado en una variable
+				// se agrega a la pila
+				e1.aux = total;
+				Push(&pilaEvaluador,e1);
+			break;
+			
+			case '-': // operador resta
+				e1 = Pop(&pilaEvaluador); // asignamos el valor derecho
+				numDer = e1.aux; // se lo ponemos a la variable derecho
+
+				e1 = Pop(&pilaEvaluador);// asignamos el izquierdo y lo ponemos en su variable
+				numIzq = e1.aux;
+				// aplicamos la operacion
+				total=opera(numDer,numIzq,'-'); // se guarda el resultado en una variable
+				// se agrega a la pila
+				e1.aux = total;
+				Push(&pilaEvaluador,e1);
+			break;
+
+			case '*': // operador multiplicacion
+				e1 = Pop(&pilaEvaluador); // asignamos el valor derecho
+				numDer = e1.aux; // se lo ponemos a la variable derecho
+
+				e1 = Pop(&pilaEvaluador);// asignamos el izquierdo y lo ponemos en su variable
+				numIzq = e1.aux;
+				// aplicamos la operacion
+				total=opera(numDer,numIzq,'*'); // se guarda el resultado en una variable
+				// se agrega a la pila
+				e1.aux = total;
+				Push(&pilaEvaluador,e1);
+			break;
+			
+			case '/': // operador division tiene una prioridad de 2
+				e1 = Pop(&pilaEvaluador); // asignamos el valor derecho
+				numDer = e1.aux; // se lo ponemos a la variable derecho
+
+				e1 = Pop(&pilaEvaluador);// asignamos el izquierdo y lo ponemos en su variable
+				numIzq = e1.aux;
+				// aplicamos la operacion
+				total=opera(numDer,numIzq,'/'); // se guarda el resultado en una variable
+				// se agrega a la pila
+				e1.aux = total;
+				Push(&pilaEvaluador,e1);
+			break;
+
+			case '^': // operador del exponente tiene una prioridad de 3
+				e1 = Pop(&pilaEvaluador); // asignamos el valor derecho
+				numDer = e1.aux; // se lo ponemos a la variable derecho
+
+				e1 = Pop(&pilaEvaluador);// asignamos el izquierdo y lo ponemos en su variable
+				numIzq = e1.aux;
+				// aplicamos la operacion
+				total=opera(numDer,numIzq,'^'); // se guarda el resultado en una variable
+				// se agrega a la pila
+				e1.aux = total;
+				Push(&pilaEvaluador,e1);
+			break;
+
+			default: // en caso de que sea una letra se agrega su valores a la pila
+				for(k = 0; k<exp->tamVariables; k++)
+				{
+					if(exp->variables[k].var == exp->cadena[i])
+					{
+						e1.aux = exp->variables[k].valor; // asignamos el valor de la variable en la pila
+						Push(&pilaEvaluador,e1);
+						break;
+					}
+				}
+
+			break;
+		}
+		
+	}
+	// al finalizar nos debe quedar el valor en la pila 
+	e1 = Pop(&pilaEvaluador);
+	Destroy(&pilaEvaluador); // destruimos pila
+	total = e1.aux; // asignamos el valor final
 	return total; // devuelve el resultado
 }
 /*
@@ -434,7 +525,7 @@ expresion convierteExpresion(expresion *exp) // exp es la expresion infija
 void verVariables(expresion *exp)
 {
 	int i =0;
-	printf("\n %s \t", "--------------LISTA DE VARIABLES ESCRITAS--------------");
+	printf("\n %s \t", "--------------EL VALOR DE TUS VARIABLES FUERON--------------");
 	for(i = 0; i<exp->tamVariables; i++)
 	{
 		// recorremos las variables
